@@ -223,13 +223,13 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
             }
 
             function downloadCanvas() {
-              document.body.className='loading';
+              document.getElementById('loading_div').className='loading';
               var canvas = document.getElementById("canvas");
               var link = document.createElement("a");
               link.href = canvas.toDataURL("image/png");
               link.download = "canvas_image.png";
               link.click();
-              document.body.className='';
+              document.getElementById('loading_div').className='';
             }
           </script>
           <input
@@ -299,5 +299,6 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
       <canvas id="canvas" width="1123" height="906" style="width: 75%"></canvas>
       <br />
     </div>
+    <div id='loading_div'></div>
   </body>
 </html>
