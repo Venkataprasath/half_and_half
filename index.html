@@ -226,10 +226,14 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
               // document.getElementById('loading_div').className='loading';
               var canvas = document.getElementById("canvas");
               var link = document.createElement("a");
-              window.open(canvas.toDataURL("image/png"), '_blank', 'noopener, noreferrer');
-              // link.href = canvas.toDataURL("image/png");
-              // link.download = "canvas_image.png";
-              // link.click();
+              // window.open(canvas.toDataURL("image/png"), '_blank', 'noopener, noreferrer');
+              var image_href=URL.createObjectURL( URL.createObjectURL(); 
+
+
+               link.href = image_href;
+               // link.download = "canvas_image.png";
+              link.click();
+              URL.revokeObjectURL(image_href);
               // document.getElementById('loading_div').className='';
             }
           </script>
