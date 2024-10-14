@@ -1,0 +1,92 @@
+<html>
+<head>
+  <title>Home</title>
+</head>
+<body>
+  <h1>Home</h1>
+  <p>Welcome to the Half & Half</p>
+  <script>
+    var imageSrc = '';
+    function previewImage(event) {
+      var reader = new FileReader();
+      reader.onload = function(){
+        var img = new Image();
+        img.onload = function() {
+          var canvas = document.getElementById('canvas');
+          var whichHalf = document.getElementById('which_half');
+          var ctx = canvas.getContext('2d');
+          canvas.width = img.width;
+          canvas.height = img.height;
+
+          ctx.drawImage(img, 0, 0);
+
+
+          toggleHalf(event)
+        };
+        img.src = reader.result;
+        imageSrc = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function debounce(func, wait) {
+      let timeout;
+      return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+      };
+    }
+
+
+    function toggleHalf(event) {
+      var img = new Image();
+      document.getElementById('which_half').value = document.getElementById('which_half').value == 'left' ? 'right' : 'left';
+      img.onload = function() {
+        var canvas = document.getElementById('canvas');
+        var whichHalf = document.getElementById('which_half');
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        var data = imageData.data;
+
+        // Convert left half to black and white
+        if (whichHalf.value == 'left') {
+          for (var y = 0; y < canvas.height; y++) {
+            for (var x = 0; x < canvas.width / 2; x++) {
+              var index = (y * canvas.width + x) * 4;
+              var r = data[index];
+              var g = data[index + 1];
+              var b = data[index + 2];
+              var gray = 0.3 * r + 0.59 * g + 0.11 * b;
+              data[index] = data[index + 1] = data[index + 2] = gray;
+            }
+          }
+        }else{
+          for (var y = 0; y < canvas.height; y++) {
+            for (var x = canvas.width / 2; x < canvas.width; x++) {
+              var index = (y * canvas.width + x) * 4;
+              var r = data[index];
+              var g = data[index + 1];
+              var b = data[index + 2];
+              var gray = 0.3 * r + 0.59 * g + 0.11 * b;
+              data[index] = data[index + 1] = data[index + 2] = gray;
+            }
+          }
+        }
+        // Put image data back to canvas
+        ctx.putImageData(imageData, 0, 0);
+      }
+      img.src = imageSrc
+    }
+  </script>
+  <input type="file" name="file" id="file" accept="image/*" onchange="previewImage(event)">
+  <br/>
+  <button onclick="toggleHalf(event)">Toggle</button>
+  <input type="button" id="which_half" value="Toggle" value = 'right' hidden>
+  <br/>
+  <div id="canvasContainer">
+    <canvas id="canvas"></canvas>
+    <br/>
+  </div>
+</body>
+</html>
