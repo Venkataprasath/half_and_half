@@ -223,13 +223,14 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
             }
 
             function downloadCanvas() {
-              document.getElementById('loading_div').className='loading';
+              // document.getElementById('loading_div').className='loading';
               var canvas = document.getElementById("canvas");
               var link = document.createElement("a");
-              link.href = canvas.toDataURL("image/png");
-              link.download = "canvas_image.png";
-              link.click();
-              document.getElementById('loading_div').className='';
+              window.open(canvas.toDataURL("image/png"), '_blank', 'noopener, noreferrer');
+              // link.href = canvas.toDataURL("image/png");
+              // link.download = "canvas_image.png";
+              // link.click();
+              // document.getElementById('loading_div').className='';
             }
           </script>
           <input
