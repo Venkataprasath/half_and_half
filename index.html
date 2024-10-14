@@ -5,6 +5,7 @@
 <body>
   <h1>Home</h1>
   <p>Welcome to the Half & Half</p>
+  <p>Upload a image to make one half black and white</p>
   <script>
     var imageSrc = '';
     function previewImage(event) {
@@ -80,6 +81,7 @@
     }
   </script>
   <input type="file" name="file" id="file" accept="image/*" onchange="previewImage(event)" label='Choose Image'>
+  <label for="file">Choose Image (Click me)</label>
   <br/>
   <button onclick="toggleHalf(event)">Toggle</button>
   <input type="button" id="which_half" value="Toggle" value = 'right' hidden>
